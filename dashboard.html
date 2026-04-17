@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Feed — Gathered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/dashboard.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container">
+      <div class="row">
+        <div>
+          <h1 class="h1">Prayer feed</h1>
+          <p class="lede">Who needs prayer today—plus your own requests, always close at hand.</p>
+        </div>
+        <div class="nav__actions">
+          <a class="button" href="create-prayer.html">New request</a>
+          <a class="button button--ghost" href="profile.html">Your profile</a>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <section class="stack" aria-label="Your requests">
+        <div class="row">
+          <h2 class="h2">Your active requests</h2>
+        </div>
+        <div id="mine" class="grid card-grid" style="grid-template-columns: repeat(12, 1fr)"></div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="stack" aria-label="Friends feed">
+        <div class="row">
+          <h2 class="h2">Friends & people you follow</h2>
+          <a class="link" href="profile.html#find">Find people</a>
+        </div>
+        <div id="feed" class="grid card-grid" style="grid-template-columns: repeat(12, 1fr)"></div>
+      </section>
+    </main>
+  </body>
+</html>

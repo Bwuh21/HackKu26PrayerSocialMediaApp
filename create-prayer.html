@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>New prayer request — Gathered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/create-prayer.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container" style="max-width: 760px">
+      <div class="row">
+        <h1 class="h1" style="margin: 0">New prayer request</h1>
+        <a class="button button--ghost" href="dashboard.html">Cancel</a>
+      </div>
+      <p class="lede">Write what you want friends to carry with you. You can post updates anytime.</p>
+
+      <div class="card card--glow" style="margin-top: 16px">
+        <div class="card__pad">
+          <form class="form" id="create-form">
+            <div class="field">
+              <label class="label" for="title">Title</label>
+              <input class="input" id="title" required placeholder="A short headline" />
+            </div>
+            <div class="field">
+              <label class="label" for="description">Description</label>
+              <textarea class="textarea" id="description" placeholder="Context, timing, what would help you feel supported…"></textarea>
+            </div>
+            <div class="grid" style="grid-template-columns: repeat(12, 1fr); gap: 12px">
+              <div class="field" style="grid-column: span 12">
+                <label class="label" for="category">Category</label>
+                <select class="select" id="category"></select>
+              </div>
+              <div class="field" style="grid-column: span 12">
+                <label class="label" for="visibility">Visibility</label>
+                <select class="select" id="visibility">
+                  <option value="friends">Followers only (recommended)</option>
+                  <option value="public">Public</option>
+                </select>
+              </div>
+            </div>
+            <div class="form__actions">
+              <button class="button" type="submit" id="submit">Publish request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

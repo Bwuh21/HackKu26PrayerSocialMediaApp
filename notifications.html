@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notifications — Gathered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/notifications.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container" style="max-width: 860px">
+      <div class="row">
+        <h1 class="h1" style="margin: 0">Notifications</h1>
+        <button class="button button--ghost" type="button" id="mark-all">Mark all read</button>
+      </div>
+      <p class="lede">Updates from friends, prayers from your community, and gentle encouragements.</p>
+
+      <div class="divider"></div>
+
+      <div id="list" class="stack"></div>
+    </main>
+  </body>
+</html>

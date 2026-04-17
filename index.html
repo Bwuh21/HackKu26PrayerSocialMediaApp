@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gathered — Prayer, together</title>
+    <meta name="description" content="A calm place to share prayer requests, post updates, and pray for friends—without the group-text chaos." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/landing.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="hero container">
+      <div class="hero__grid">
+        <div>
+          <p class="chip chip--gold" style="width: fit-content">Prayer-first community</p>
+          <h1 class="h1" style="margin-top: 12px">A clean social feed for prayer requests and real updates.</h1>
+          <p class="lede">
+            Gathered is built for intentional prayer rhythms: quickly see who needs prayer, open a request, pray, and move on.
+            No text-thread chaos, no algorithm noise.
+          </p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px">
+            <a class="button" href="signup.html">Create account</a>
+            <a class="button button--ghost" href="login.html">Log in</a>
+            <button class="button button--ghost" type="button" id="preview-app">Preview the app</button>
+          </div>
+          <div class="divider"></div>
+          <div class="kpi" aria-label="Product highlights">
+            <div class="kpi__row">
+              <div class="kpi__dot" aria-hidden="true"></div>
+              <div>
+                <div class="h3">Updates without awkward texting</div>
+                <div class="muted">Post a short update and everyone following you can see it in one glance.</div>
+              </div>
+            </div>
+            <div class="kpi__row">
+              <div class="kpi__dot" aria-hidden="true"></div>
+              <div>
+                <div class="h3">Pray with intention</div>
+                <div class="muted">Tap in, pray, and optionally send a gentle encouragement preset.</div>
+              </div>
+            </div>
+            <div class="kpi__row">
+              <div class="kpi__dot" aria-hidden="true"></div>
+              <div>
+                <div class="h3">Celebrate answered prayer</div>
+                <div class="muted">Mark requests as answered and revisit them as a hopeful archive.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero__panel" aria-label="Preview">
+          <div class="h2" style="font-size: 1.2rem">Preview feed card style</div>
+          <p class="muted" style="margin-top: 10px">Designed to feel like a modern social app, with calm visuals and clear hierarchy.</p>
+          <div class="stack" style="margin-top: 18px">
+            <div class="card card--glow">
+              <div class="card__pad">
+                <div class="row">
+                  <div class="card__title" style="margin: 0">Interview week</div>
+                  <span class="chip">School</span>
+                </div>
+                <div class="card__meta" style="margin-top: 10px">
+                  <span class="chip chip--gold">Active</span>
+                  <span>Updated 2h ago</span>
+                </div>
+                <p class="muted" style="margin: 12px 0 0">“Please pray for peace and focus—I'll post an update after Thursday.”</p>
+                <div class="row" style="margin-top: 14px">
+                  <span class="chip">12 prayed</span>
+                  <span class="button button--small" aria-disabled="true">Open</span>
+                </div>
+              </div>
+            </div>
+            <div class="card card--answered">
+              <div class="card__pad">
+                <div class="row">
+                  <div class="card__title" style="margin: 0">Test results</div>
+                  <span class="chip chip--gold">Answered</span>
+                </div>
+                <p class="muted" style="margin: 12px 0 0">A hopeful highlight for the community—clear, warm, uplifting.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="container footer">
+      <div class="divider"></div>
+      Built for HackKU — Gathered is a prayer-centered social feed (Supabase + vanilla web).
+    </footer>
+  </body>
+</html>

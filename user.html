@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profile — Gathered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/user.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container">
+      <div class="row">
+        <h1 class="h1" style="margin: 0">Friend profile</h1>
+        <a class="button button--ghost" href="dashboard.html">Back to feed</a>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="card card--glow">
+        <div class="card__pad">
+          <div class="profile-head">
+            <img class="avatar" alt="" data-avatar hidden />
+            <div data-avatar-fallback class="avatar" aria-hidden="true"></div>
+            <div>
+              <div class="h2" style="margin-bottom: 6px" data-display-name></div>
+              <div class="muted">@<span data-username></span></div>
+              <p class="muted" style="margin-top: 12px" data-bio></p>
+              <p class="muted" style="margin-top: 10px"><span class="chip chip--gold">Verse</span> <span data-verse></span></p>
+              <div class="row" style="margin-top: 14px; justify-content: flex-start; gap: 10px">
+                <button class="button" type="button" id="follow-toggle" hidden>Follow</button>
+                <a class="link" href="profile.html#find">Find more friends</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <section class="stack">
+        <h2 class="h2">Prayer requests you can see</h2>
+        <p class="muted" style="margin: 0">
+          If a request is “followers only”, you’ll see it after you follow this person.
+        </p>
+        <div id="requests" class="grid" style="grid-template-columns: repeat(12, 1fr); margin-top: 12px"></div>
+      </section>
+    </main>
+  </body>
+</html>

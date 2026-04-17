@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profile — Gathered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/profile.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container">
+      <div class="row">
+        <h1 class="h1" style="margin: 0">Your profile</h1>
+        <a class="button button--ghost" href="dashboard.html">Back to feed</a>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid" style="grid-template-columns: repeat(12, 1fr); align-items: start">
+        <div class="card card--glow" style="grid-column: span 12">
+          <div class="card__pad">
+            <div class="profile-head">
+              <img class="avatar" alt="" data-avatar src="" hidden />
+              <div data-avatar-fallback class="avatar" aria-hidden="true"></div>
+              <div>
+                <div class="h2" style="margin-bottom: 6px" data-display-name></div>
+                <div class="muted">@<span data-username></span></div>
+                <p class="muted" style="margin-top: 12px" data-bio></p>
+                <p class="muted" style="margin-top: 10px"><span class="chip chip--gold">Verse</span> <span data-verse></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column: span 12">
+          <div class="card__pad">
+            <h2 class="h2">Edit profile</h2>
+            <form class="form" id="profile-form" style="margin-top: 12px">
+              <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
+                <div class="field" style="grid-column: span 12">
+                  <label class="label" for="display_name">Name</label>
+                  <input class="input" id="display_name" name="display_name" required />
+                </div>
+                <div class="field" style="grid-column: span 12">
+                  <label class="label" for="username">Username</label>
+                  <input class="input" id="username" name="username" required />
+                </div>
+                <div class="field" style="grid-column: span 12">
+                  <label class="label" for="avatar_url">Profile picture URL (optional)</label>
+                  <input class="input" id="avatar_url" name="avatar_url" placeholder="https://…" />
+                </div>
+                <div class="field" style="grid-column: span 12">
+                  <label class="label" for="bio">Short bio</label>
+                  <textarea class="textarea" id="bio" name="bio" rows="4"></textarea>
+                </div>
+                <div class="field" style="grid-column: span 12">
+                  <label class="label" for="favorite_verse">Favorite Bible verse (optional)</label>
+                  <input class="input" id="favorite_verse" name="favorite_verse" />
+                </div>
+              </div>
+              <div class="form__actions">
+                <button class="button" type="submit" id="save-profile">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card" id="find" style="grid-column: span 12">
+          <div class="card__pad">
+            <h2 class="h2">Find people</h2>
+            <p class="muted" style="margin-top: 8px">Follow friends to see their prayer requests in your feed (when shared with followers).</p>
+            <form class="form" id="search-form" style="margin-top: 12px">
+              <div class="field">
+                <label class="label" for="q">Search by username</label>
+                <div class="row" style="justify-content: flex-start; gap: 10px">
+                  <input class="input" id="q" name="q" placeholder="e.g. sarah_ku" style="max-width: 420px" />
+                  <button class="button button--ghost" type="submit">Search</button>
+                </div>
+              </div>
+            </form>
+            <div id="search-results" class="stack" style="margin-top: 14px"></div>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column: span 12">
+          <div class="card__pad">
+            <div class="row">
+              <h2 class="h2" style="margin: 0">Your prayer requests</h2>
+              <a class="button button--small button--ghost" href="create-prayer.html">New</a>
+            </div>
+            <div id="requests" class="stack" style="margin-top: 14px"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

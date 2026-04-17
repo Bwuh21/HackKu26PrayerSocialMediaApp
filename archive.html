@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Answered & archive — Gathered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/archive.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container">
+      <div class="row">
+        <div>
+          <h1 class="h1" style="margin-bottom: 8px">Answered & archived</h1>
+          <p class="lede" style="margin: 0">A hopeful history of God’s faithfulness in your community’s prayers.</p>
+        </div>
+        <a class="button button--ghost" href="dashboard.html">Back to feed</a>
+      </div>
+
+      <div class="divider"></div>
+
+      <section class="stack">
+        <h2 class="h2">Answered</h2>
+        <div id="answered" class="grid" style="grid-template-columns: repeat(12, 1fr)"></div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="stack">
+        <h2 class="h2">Archived</h2>
+        <div id="archived" class="grid" style="grid-template-columns: repeat(12, 1fr)"></div>
+      </section>
+    </main>
+  </body>
+</html>

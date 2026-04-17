@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Log in — Gathered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/login.js"></script>
+  </head>
+  <body>
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container" style="max-width: 560px">
+      <h1 class="h1">Welcome back</h1>
+      <p class="lede">Log in to see your prayer feed and updates from friends.</p>
+
+      <div class="card card--glow" style="margin-top: 18px">
+        <div class="card__pad">
+          <form class="form" id="login-form">
+            <div class="field">
+              <label class="label" for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label class="label" for="password">Password</label>
+              <input class="input" id="password" name="password" type="password" autocomplete="current-password" required />
+            </div>
+            <div class="form__actions">
+              <button class="button" type="submit" id="submit">Log in</button>
+              <a class="link" href="signup.html">Create an account</a>
+            </div>
+            <div class="divider"></div>
+            <div class="muted" style="font-size: 0.95rem; text-align: center">Judging or exploring the UI?</div>
+            <div class="form__actions" style="justify-content: center">
+              <button class="button button--ghost" type="button" id="skip-preview">Preview the app (no login)</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
