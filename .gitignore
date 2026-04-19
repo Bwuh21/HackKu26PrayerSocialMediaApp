@@ -1,2 +1,4 @@
 # Local Supabase keys (optional override)
 js/config.local.js
+# Generated on Vercel/CI from env — never commit
+js/config.deploy.js
