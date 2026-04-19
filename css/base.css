@@ -23,6 +23,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+html[data-theme="dark"] {
+  background-color: #050608;
+}
+
+html[data-theme="dark"] body {
+  color: var(--ink);
+  background:
+    radial-gradient(900px 500px at 80% -20%, rgba(196, 154, 74, 0.06), transparent 50%),
+    linear-gradient(180deg, #0e1118 0%, #080a0f 55%, #050608 100%);
+}
+
 a {
   color: inherit;
   text-decoration-thickness: 0.08em;

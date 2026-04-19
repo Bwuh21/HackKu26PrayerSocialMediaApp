@@ -37,10 +37,10 @@ if (isPreviewMode()) {
         };
       }
       if (n.type === 'prayer_received') {
-        return { title: `${who} prayed for you`, href: rid ? `prayer.html?id=${encodeURIComponent(rid)}` : 'dashboard.html' };
+        return { title: `${who} responded to your request`, href: rid ? `prayer.html?id=${encodeURIComponent(rid)}` : 'dashboard.html' };
       }
       if (n.type === 'encouragement') {
-        return { title: `${who} sent encouragement`, href: rid ? `prayer.html?id=${encodeURIComponent(rid)}` : 'dashboard.html' };
+        return { title: `Update from ${who}`, href: rid ? `prayer.html?id=${encodeURIComponent(rid)}` : 'dashboard.html' };
       }
       return { title: 'Notification', href: 'dashboard.html' };
     };

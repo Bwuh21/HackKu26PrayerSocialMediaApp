@@ -38,7 +38,7 @@ export async function getProfilesByIds(ids) {
 
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, display_name, username, avatar_url')
+    .select('id, display_name, username')
     .in('id', unique);
   if (error) throw error;
 
@@ -67,7 +67,7 @@ export async function searchProfiles(query, { limit = 12 } = {}) {
 
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, display_name, username, avatar_url, bio')
+    .select('id, display_name, username, bio')
     .ilike('username', `%${q}%`)
     .limit(limit);
 
@@ -84,6 +84,26 @@ export async function listFollowingIds() {
   const { data, error } = await supabase.from('follows').select('following_id').eq('follower_id', me);
   if (error) throw error;
   return (data || []).map((r) => r.following_id);
+}
+
+/** Profiles for everyone you follow (friends list). */
+export async function listFollowingProfiles() {
+  const ids = await listFollowingIds();
+  if (!ids.length) return [];
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id, display_name, username, bio')
+    .in('id', ids);
+  if (error) throw error;
+
+  const rows = data || [];
+  rows.sort((a, b) =>
+    String(a.display_name || a.username || '').localeCompare(String(b.display_name || b.username || ''), undefined, {
+      sensitivity: 'base'
+    })
+  );
+  return rows;
 }
 
 export async function isFollowing(followingId) {
@@ -183,6 +203,21 @@ export async function listFeedPrayerRequests({ limit = 40 } = {}) {
     .from('prayer_requests')
     .select('*')
     .in('user_id', ids)
+    .order('updated_at', { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return data || [];
+}
+
+/** Home feed: only people you follow (excludes your own requests). */
+export async function listFollowingFeedPrayerRequests({ limit = 60 } = {}) {
+  const following = await listFollowingIds();
+  if (!following.length) return [];
+
+  const { data, error } = await supabase
+    .from('prayer_requests')
+    .select('*')
+    .in('user_id', following)
     .order('updated_at', { ascending: false })
     .limit(limit);
   if (error) throw error;

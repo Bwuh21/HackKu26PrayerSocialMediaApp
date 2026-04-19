@@ -2,7 +2,7 @@ import { supabaseConfigured } from '../supabase.js';
 import { mountAppNav } from '../nav.js';
 import { requireSession } from '../auth.js';
 import { toast, $ } from '../ui.js';
-import { listMyPrayerRequests, countPrayersForRequests, getMyProfile } from '../api.js';
+import { listMyPrayerRequests, getMyProfile } from '../api.js';
 import { prayerRequestCard } from '../render.js';
 import { isPreviewMode } from '../preview.js';
 import { mountPreviewArchive } from '../preview-ui.js';
@@ -24,8 +24,6 @@ if (isPreviewMode()) {
     const answered = rows.filter((r) => r.status === 'answered');
     const archived = rows.filter((r) => r.status === 'archived');
     const profile = await getMyProfile();
-    const ids = [...answered, ...archived].map((r) => r.id);
-    const counts = await countPrayersForRequests(ids);
 
     const render = (list, el) => {
       if (!list.length) {
@@ -37,7 +35,6 @@ if (isPreviewMode()) {
           prayerRequestCard({
             request: r,
             profile,
-            prayedCount: counts.get(r.id) || 0,
             href: `prayer.html?id=${encodeURIComponent(r.id)}`
           })
         )

@@ -50,7 +50,6 @@ export function previewProfileMe() {
     id: PREVIEW_USER_ID,
     display_name: 'River Avery',
     username: 'river_demo',
-    avatar_url: null,
     bio: 'Campus ministry + night classes. Grateful for community that prays with specificity.',
     favorite_verse: 'Philippians 4:6 — “Do not be anxious about anything…”'
   };
@@ -61,7 +60,6 @@ export function previewProfileFriend() {
     id: PREVIEW.friendUserId,
     display_name: 'Sam Kim',
     username: 'samkim',
-    avatar_url: null,
     bio: 'Husband & dad. Learning to rest in God’s timing.',
     favorite_verse: 'Isaiah 41:10'
   };

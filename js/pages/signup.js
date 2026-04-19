@@ -26,14 +26,28 @@ $('#signup-form').addEventListener('submit', async (e) => {
     return;
   }
 
+  const displayName = $('#display_name').value.trim();
+  const username = $('#username').value.trim();
+  const email = $('#email').value.trim();
+  const password = $('#password').value;
+  const passwordConfirm = $('#password_confirm').value;
+
+  if (password !== passwordConfirm) {
+    toast('Passwords do not match. Please try again.', 'error');
+    $('#password_confirm').focus();
+    return;
+  }
+
+  const usernameOk = /^[a-zA-Z0-9_]{2,32}$/.test(username);
+  if (!usernameOk) {
+    toast('Username must be 2–32 characters and use only letters, numbers, and underscores.', 'error');
+    $('#username').focus();
+    return;
+  }
+
   const btn = $('#submit');
   setBusy(btn, true);
   try {
-    const displayName = $('#display_name').value.trim();
-    const username = $('#username').value.trim();
-    const email = $('#email').value.trim();
-    const password = $('#password').value;
-
     const { session } = await signUp({ email, password, displayName, username });
     if (session) {
       disablePreview();

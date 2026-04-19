@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sign up — Gathered</title>
+    <title>Sign up — Simple Prayer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -44,6 +44,20 @@
             <div class="field">
               <label class="label" for="password">Password</label>
               <input class="input" id="password" name="password" type="password" autocomplete="new-password" minlength="8" required />
+            </div>
+            <div class="field">
+              <label class="label" for="password_confirm">Confirm password</label>
+              <input
+                class="input"
+                id="password_confirm"
+                name="password_confirm"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+                aria-describedby="password_confirm_hint"
+              />
+              <div class="muted" id="password_confirm_hint" style="font-size: 0.92rem">Must match the password above.</div>
             </div>
             <div class="form__actions">
               <button class="button" type="submit" id="submit">Sign up</button>

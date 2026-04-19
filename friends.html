@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Friends — Simple Prayer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <script type="module" src="js/pages/friends.js"></script>
+  </head>
+  <body class="with-fab">
+    <div class="config-banner" data-config-banner hidden>
+      Add your Supabase URL + anon key in <code>js/config.js</code>, then refresh.
+    </div>
+
+    <header class="container">
+      <div data-app-nav></div>
+    </header>
+
+    <main class="section container friends-page">
+      <div class="friends-search-wrap" id="find">
+        <form class="friends-search-form" id="search-form" autocomplete="off" role="search">
+          <label class="sr-only" for="q">Find friends</label>
+          <input
+            class="input friends-search-input"
+            id="q"
+            name="q"
+            type="search"
+            placeholder="Find friends"
+            enterkeyhint="search"
+            maxlength="64"
+          />
+        </form>
+        <div id="search-results" class="friends-search-results stack" hidden></div>
+      </div>
+
+      <section class="friends-following" aria-label="People you follow">
+        <h2 class="friends-section-label">Your friends</h2>
+        <div id="friends-list" class="stack"></div>
+        <div id="friends-empty" class="empty card card__pad" hidden>
+          <p class="friends-empty__title">Add friends to get started</p>
+          <p class="muted" style="margin: 10px 0 0">Use search or tap <strong>+</strong> to find people.</p>
+        </div>
+      </section>
+    </main>
+
+    <a class="fab" href="#find" id="add-friend-fab" aria-label="Find friends — focus search">
+      <span class="fab__glyph" aria-hidden="true">+</span>
+    </a>
+    <div data-app-bottom-nav hidden></div>
+  </body>
+</html>

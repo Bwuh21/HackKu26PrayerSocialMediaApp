@@ -212,27 +212,20 @@ language plpgsql
 security definer
 set search_path = public
 as $$
-declare
-  owner_id uuid;
 begin
-  select pr.user_id into owner_id
-  from public.prayer_requests pr
-  where pr.id = new.prayer_request_id;
-
-  if owner_id is null or owner_id = new.user_id then
-    return new;
-  end if;
-
+  -- No PL/pgSQL variables in SQL fragments (avoids "relation does not exist" name resolution bugs).
   insert into public.notifications (user_id, type, payload)
-  values (
-    owner_id,
+  select
+    pr.user_id,
     case when new.message_key is null then 'prayer_received' else 'encouragement' end,
     jsonb_build_object(
       'request_id', new.prayer_request_id,
       'actor_id', new.user_id,
       'message_key', new.message_key
     )
-  );
+  from public.prayer_requests pr
+  where pr.id = new.prayer_request_id
+    and pr.user_id <> new.user_id;
 
   return new;
 end;
@@ -249,29 +242,19 @@ language plpgsql
 security definer
 set search_path = public
 as $$
-declare
-  owner_id uuid;
-  rid uuid;
 begin
-  select pr.user_id, pr.id into owner_id, rid
-  from public.prayer_requests pr
-  where pr.id = new.prayer_request_id;
-
-  if owner_id is null then
-    return new;
-  end if;
-
   insert into public.notifications (user_id, type, payload)
   select
     f.follower_id,
     'prayer_update',
     jsonb_build_object(
-      'request_id', rid,
-      'actor_id', owner_id
+      'request_id', pr.id,
+      'actor_id', new.user_id
     )
-  from public.follows f
-  where f.following_id = owner_id
-    and f.follower_id <> owner_id;
+  from public.prayer_requests pr
+  inner join public.follows f on f.following_id = pr.user_id
+  where pr.id = new.prayer_request_id
+    and f.follower_id <> pr.user_id;
 
   return new;
 end;

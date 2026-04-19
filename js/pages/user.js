@@ -1,9 +1,10 @@
-import { supabaseConfigured } from '../supabase.js';
 import { mountAppNav } from '../nav.js';
+import { APP_NAME } from '../brand.js';
+import { supabaseConfigured } from '../supabase.js';
 import { requireSession } from '../auth.js';
 import { toast, $ } from '../ui.js';
-import { getProfileById, listPrayerRequestsForUser, isFollowing, followUser, unfollowUser, countPrayersForRequests } from '../api.js';
-import { mountAvatar, prayerRequestCard } from '../render.js';
+import { getProfileById, listPrayerRequestsForUser, isFollowing, followUser, unfollowUser } from '../api.js';
+import { prayerRequestCard } from '../render.js';
 import { isPreviewMode, PREVIEW_USER_ID } from '../preview.js';
 import { mountPreviewUser } from '../preview-ui.js';
 
@@ -38,26 +39,14 @@ if (isPreviewMode()) {
       throw new Error('redirect');
     }
 
-    const img = document.querySelector('[data-avatar]');
-    const fallback = document.querySelector('[data-avatar-fallback]');
-
     const profile = await getProfileById(id);
     if (!profile) {
       $('#requests').innerHTML = `<div class="empty card card__pad">User not found.</div>`;
     } else {
-      document.title = `${profile.display_name || profile.username} — Gathered`;
+      document.title = `${profile.display_name || profile.username} — ${APP_NAME}`;
       $('[data-display-name]').textContent = profile.display_name || profile.username;
       $('[data-username]').textContent = profile.username;
       $('[data-bio]').textContent = profile.bio || '';
-      $('[data-verse]').textContent = profile.favorite_verse || '—';
-
-      mountAvatar({
-        imgEl: img,
-        fallbackEl: fallback,
-        name: profile.display_name,
-        username: profile.username,
-        avatarUrl: profile.avatar_url
-      });
 
       const btn = $('#follow-toggle');
       btn.hidden = false;
@@ -84,8 +73,6 @@ if (isPreviewMode()) {
 
       async function refreshRequests() {
         const rows = await listPrayerRequestsForUser(profile.id);
-        const ids = rows.map((r) => r.id);
-        const counts = await countPrayersForRequests(ids);
         if (!rows.length) {
           $('#requests').innerHTML = `<div class="empty card card__pad">No visible requests yet (or follow them to see follower-only requests).</div>`;
           return;
@@ -95,7 +82,6 @@ if (isPreviewMode()) {
             prayerRequestCard({
               request: r,
               profile,
-              prayedCount: counts.get(r.id) || 0,
               href: `prayer.html?id=${encodeURIComponent(r.id)}`
             })
           )

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Feed — Gathered</title>
+    <title>Feed — Simple Prayer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -22,35 +22,17 @@
     </header>
 
     <main class="section container">
-      <div class="row">
-        <div>
-          <h1 class="h1">Prayer feed</h1>
-          <p class="lede">Who needs prayer today—plus your own requests, always close at hand.</p>
-        </div>
-        <div class="nav__actions">
-          <a class="button" href="create-prayer.html">New request</a>
-          <a class="button button--ghost" href="profile.html">Your profile</a>
-        </div>
+      <div>
+        <h1 class="h1">Prayer feed</h1>
+        <p class="lede">Prayer requests from people you follow.</p>
       </div>
 
       <div class="divider"></div>
 
-      <section class="stack" aria-label="Your requests">
-        <div class="row">
-          <h2 class="h2">Your active requests</h2>
-        </div>
-        <div id="mine" class="grid card-grid" style="grid-template-columns: repeat(12, 1fr)"></div>
-      </section>
-
-      <div class="divider"></div>
-
-      <section class="stack" aria-label="Friends feed">
-        <div class="row">
-          <h2 class="h2">Friends & people you follow</h2>
-          <a class="link" href="profile.html#find">Find people</a>
-        </div>
+      <section class="stack" aria-label="Friends prayer requests">
         <div id="feed" class="grid card-grid" style="grid-template-columns: repeat(12, 1fr)"></div>
       </section>
     </main>
+    <div data-app-bottom-nav hidden></div>
   </body>
 </html>

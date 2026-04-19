@@ -13,9 +13,10 @@ import {
   previewPrayerById,
   previewNotifications
 } from './preview.js';
-import { prayerRequestCard, categoryLabel, statusChip, mountAvatar } from './render.js';
+import { prayerRequestCard, categoryLabel, statusChip } from './render.js';
 import { $, escapeHtml, formatDate, toast } from './ui.js';
 import { CATEGORIES } from './api.js';
+import { APP_NAME } from './brand.js';
 
 export function injectPreviewBanner({ message } = {}) {
   if (!isPreviewMode()) return;
@@ -34,7 +35,7 @@ export function injectPreviewBanner({ message } = {}) {
           <div class="muted" style="margin-top: 8px">
             ${
               message ||
-              'You’re browsing sample content. Nothing is saved. Create an account to use Gathered for real.'
+              `You’re browsing sample content. Nothing is saved. Create an account to use ${APP_NAME} for real.`
             }
           </div>
         </div>
@@ -47,50 +48,36 @@ export function injectPreviewBanner({ message } = {}) {
 
 export function mountPreviewDashboard() {
   injectPreviewBanner();
-  const mine = previewRequestsMine();
   const feed = previewRequestsFriend();
   const profiles = new Map([
     [PREVIEW_USER_ID, previewProfileMe()],
     [previewProfileFriend().id, previewProfileFriend()]
   ]);
-  const counts = new Map([
-    [mine[0]?.id, 9],
-    [mine[1]?.id, 14],
-    [feed[0]?.id, 21]
-  ]);
 
-  const renderList = (rows, el) => {
-    el.innerHTML = rows
-      .map((r) =>
-        prayerRequestCard({
-          request: r,
-          profile: profiles.get(r.user_id),
-          prayedCount: counts.get(r.id) || 0,
-          href: `prayer.html?id=${encodeURIComponent(r.id)}`
-        })
-      )
-      .join('');
-  };
-
-  renderList(mine, $('#mine'));
-  renderList(feed, $('#feed'));
+  const el = $('#feed');
+  el.innerHTML = feed
+    .map((r) =>
+      prayerRequestCard({
+        request: r,
+        profile: profiles.get(r.user_id),
+        href: `prayer.html?id=${encodeURIComponent(r.id)}`
+      })
+    )
+    .join('');
 }
 
 export function mountPreviewProfile() {
   injectPreviewBanner();
-  document.title = 'Profile — Gathered';
+  document.title = `Profile — ${APP_NAME}`;
   const p = previewProfileMe();
   $('[data-display-name]').textContent = p.display_name;
   $('[data-username]').textContent = p.username;
   $('[data-bio]').textContent = p.bio;
-  $('[data-verse]').textContent = p.favorite_verse;
 
-  const img = document.querySelector('[data-avatar]');
-  const fallback = document.querySelector('[data-avatar-fallback]');
-  mountAvatar({ imgEl: img, fallbackEl: fallback, name: p.display_name, username: p.username, avatarUrl: p.avatar_url });
-
-  $('#profile-form')?.closest('.card')?.setAttribute('hidden', 'true');
-  $('#search-form')?.closest('.card')?.setAttribute('hidden', 'true');
+  const form = $('#profile-form');
+  if (form) {
+    form.innerHTML = `<p class="muted" style="margin:0">Create an account to edit your profile.</p>`;
+  }
 
   const rows = [...previewRequestsMine(), ...previewRequestsArchive()];
   const renderRow = (r) => `
@@ -116,15 +103,10 @@ export function mountPreviewProfile() {
 export function mountPreviewUser() {
   injectPreviewBanner();
   const p = previewProfileFriend();
-  document.title = `${p.display_name || p.username} — Gathered`;
+  document.title = `${p.display_name || p.username} — ${APP_NAME}`;
   $('[data-display-name]').textContent = p.display_name;
   $('[data-username]').textContent = p.username;
   $('[data-bio]').textContent = p.bio;
-  $('[data-verse]').textContent = p.favorite_verse;
-
-  const img = document.querySelector('[data-avatar]');
-  const fallback = document.querySelector('[data-avatar-fallback]');
-  mountAvatar({ imgEl: img, fallbackEl: fallback, name: p.display_name, username: p.username, avatarUrl: p.avatar_url });
 
   const btn = $('#follow-toggle');
   btn.hidden = false;
@@ -134,13 +116,11 @@ export function mountPreviewUser() {
 
   const rows = previewRequestsFriend();
   const profiles = new Map([[p.id, p]]);
-  const counts = new Map([[rows[0]?.id, 21]]);
   $('#requests').innerHTML = rows
     .map((r) =>
       prayerRequestCard({
         request: r,
         profile: profiles.get(r.user_id),
-        prayedCount: counts.get(r.id) || 0,
         href: `prayer.html?id=${encodeURIComponent(r.id)}`
       })
     )
@@ -152,11 +132,9 @@ export function mountPreviewPrayer(id) {
   const req = previewPrayerById(id);
   const root = $('#detail');
   if (!req) {
-    document.title = 'Prayer request — Gathered';
+    document.title = `Prayer request — ${APP_NAME}`;
     root.innerHTML = `<div class="empty card card__pad">No preview for this link. Try a card from the dashboard.</div>`;
-    $('#pray-section').hidden = true;
     $('#owner-tools').hidden = true;
-    $('#updates').innerHTML = '';
     return;
   }
 
@@ -164,13 +142,10 @@ export function mountPreviewPrayer(id) {
   const owner = req.user_id === me;
   const ownerProfile = owner ? previewProfileMe() : previewProfileFriend();
 
-  document.title = `${req.title} — Gathered`;
+  document.title = `${req.title} — ${APP_NAME}`;
 
   $('#open-profile').hidden = false;
   $('#open-profile').href = `user.html?id=${encodeURIComponent(req.user_id)}`;
-
-  const prayedCount =
-    req.id === PREVIEW.reqMine1 ? 9 : req.id === PREVIEW.reqMine2 ? 14 : req.id === PREVIEW.reqFriend1 ? 21 : req.id === PREVIEW.reqAnswered ? 31 : 12;
 
   const answered = req.status === 'answered';
   root.innerHTML = `
@@ -187,72 +162,31 @@ export function mountPreviewPrayer(id) {
             </div>
             <p style="margin-top: 14px; line-height: 1.65; white-space: pre-wrap">${escapeHtml(req.description || '')}</p>
           </div>
-          <div class="stack" style="gap: 10px; align-items: flex-end; min-width: 220px">
-            <div class="row" style="justify-content: flex-end; gap: 10px">
-              <img class="avatar avatar--sm" alt="" data-owner-avatar hidden />
-              <div data-owner-avatar-fallback class="avatar avatar--sm" aria-hidden="true"></div>
-              <div style="text-align: right">
-                <div style="font-weight: 750">${escapeHtml(ownerProfile.display_name)}</div>
-                <div class="muted">@${escapeHtml(ownerProfile.username)}</div>
-              </div>
+          <div class="stack" style="gap: 10px; align-items: flex-end; min-width: 200px">
+            <div style="text-align: right">
+              <div style="font-weight: 750">${escapeHtml(ownerProfile.display_name)}</div>
+              <div class="muted">@${escapeHtml(ownerProfile.username)}</div>
             </div>
-            <span class="chip chip--gold">${prayedCount} prayed</span>
           </div>
         </div>
       </div>
     </article>
   `;
 
-  mountAvatar({
-    imgEl: document.querySelector('[data-owner-avatar]'),
-    fallbackEl: document.querySelector('[data-owner-avatar-fallback]'),
-    name: ownerProfile.display_name,
-    username: ownerProfile.username,
-    avatarUrl: ownerProfile.avatar_url
-  });
-
   $('#owner-tools').hidden = !owner;
-  $('#pray-section').hidden = owner || req.status !== 'active';
-
-  if (!owner && req.status === 'active') {
-    $('#encouragement-choices').innerHTML = `
-      <button class="button button--small button--ghost" type="button" disabled>Praying for you</button>
-      <button class="button button--small button--ghost" type="button" disabled>Lifted this up</button>
-    `;
-    $('#pray-btn').onclick = () => toast('Create an account to log prayers for friends.');
-  }
 
   if (owner) {
-    $('#owner-tools').hidden = false;
-    $('#update-form')?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      toast('Preview mode: sign up to post real updates.');
-    });
+    const cat = $('#category');
+    if (cat) cat.innerHTML = CATEGORIES.map((c) => `<option value="${c.id}">${c.label}</option>`).join('');
+    $('#title').value = req.title;
+    $('#description').value = req.description || '';
+    $('#category').value = req.category;
+    $('#visibility').value = req.visibility;
+    $('#status').value = req.status;
     $('#edit-form')?.addEventListener('submit', (e) => {
       e.preventDefault();
       toast('Preview mode: sign up to edit requests.');
     });
-  }
-
-  const updates = previewUpdatesFor(req.id);
-  if (!updates.length) {
-    $('#updates').innerHTML = `<div class="empty card card__pad">No updates yet.</div>`;
-  } else {
-    $('#updates').innerHTML = updates
-      .map((u) => {
-        const author = u.user_id === PREVIEW_USER_ID ? previewProfileMe() : previewProfileFriend();
-        const who = author.display_name || author.username;
-        return `
-            <div class="card">
-              <div class="card__pad">
-                <div class="h3" style="margin: 0">${escapeHtml(who)}</div>
-                <div class="muted" style="margin-top: 6px">${escapeHtml(formatDate(u.created_at))}</div>
-                <p style="margin-top: 10px; line-height: 1.65; white-space: pre-wrap">${escapeHtml(u.body)}</p>
-              </div>
-            </div>
-          `;
-      })
-      .join('');
   }
 }
 
@@ -262,10 +196,6 @@ export function mountPreviewArchive() {
   const rows = previewRequestsArchive();
   const answered = rows.filter((r) => r.status === 'answered');
   const archived = rows.filter((r) => r.status === 'archived');
-  const counts = new Map([
-    [answered[0]?.id, 31],
-    [archived[0]?.id, 12]
-  ]);
 
   const render = (list, el) => {
     el.innerHTML = list
@@ -273,7 +203,6 @@ export function mountPreviewArchive() {
         prayerRequestCard({
           request: r,
           profile,
-          prayedCount: counts.get(r.id) || 0,
           href: `prayer.html?id=${encodeURIComponent(r.id)}`
         })
       )
@@ -295,7 +224,7 @@ export function mountPreviewNotifications() {
         n.type === 'prayer_update'
           ? `${friend.display_name} posted an update`
           : n.type === 'prayer_received'
-            ? `${friend.display_name} prayed for you`
+            ? `${friend.display_name} responded`
             : 'Notification';
       return `
         <div class="card ${unread ? 'card--glow' : ''}">
@@ -312,6 +241,49 @@ export function mountPreviewNotifications() {
       `;
     })
     .join('');
+}
+
+export function mountPreviewFriends() {
+  injectPreviewBanner({ message: 'Sample friends below. Sign up to follow people for real.' });
+  document.title = `Friends — ${APP_NAME}`;
+  const friend = previewProfileFriend();
+  $('#search-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    toast('Preview mode: create an account to search the directory.');
+  });
+  $('#q').value = friend.username;
+
+  const searchResults = $('#search-results');
+  searchResults.innerHTML = `
+    <div class="card" style="margin: 0">
+      <div class="card__pad">
+        <div class="row" style="align-items: flex-start">
+          <div style="min-width: 0">
+            <div style="font-weight: 700">${escapeHtml(friend.display_name || friend.username)}</div>
+            <div class="muted" style="font-size: 0.92rem">@${escapeHtml(friend.username)}</div>
+            <div class="muted" style="margin-top: 8px; font-size: 0.92rem">${escapeHtml(friend.bio || '')}</div>
+          </div>
+          <a class="button button--small" href="user.html?id=${encodeURIComponent(friend.id)}">View</a>
+        </div>
+      </div>
+    </div>
+    <p class="muted" style="margin: 0; font-size: 0.9rem">With a real account, search finds everyone who matches.</p>
+  `;
+  searchResults.hidden = false;
+
+  $('#friends-list').innerHTML = `
+    <a class="card friend-tile" href="user.html?id=${encodeURIComponent(friend.id)}" style="text-decoration: none; color: inherit">
+      <div class="card__pad">
+        <div class="row" style="align-items: center; justify-content: flex-start; gap: 12px">
+          <div style="min-width: 0">
+            <div style="font-weight: 700; letter-spacing: -0.02em">${escapeHtml(friend.display_name || friend.username)}</div>
+            <div class="muted" style="font-size: 0.92rem">@${escapeHtml(friend.username)}</div>
+          </div>
+        </div>
+      </div>
+    </a>
+  `;
+  $('#friends-empty').hidden = true;
 }
 
 export function mountPreviewCreatePrayer() {

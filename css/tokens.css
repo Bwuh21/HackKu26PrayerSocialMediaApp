@@ -44,7 +44,29 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: light; /* keep product intentionally light for peace */
+  :root:not([data-theme]) {
+    color-scheme: light;
   }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #f7f5f0;
+  --ink-2: #e8e4dc;
+  --muted: rgba(247, 245, 240, 0.65);
+  --paper: #101218;
+  --paper-2: #151a22;
+  --paper-3: #1a2029;
+  --gold-1: #2a2418;
+  --gold-2: #3d3424;
+  --gold-3: #c49a4a;
+  --gold-4: #d4b06a;
+  --gold-5: #e8cc8a;
+  --ring: rgba(212, 168, 90, 0.45);
+  --glow: 0 18px 60px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 18px 55px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 28px 85px rgba(0, 0, 0, 0.45);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --surface-glass: linear-gradient(165deg, rgba(26, 32, 41, 0.95), rgba(16, 18, 24, 0.88));
 }
